@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DeepSeek OCR Studio</title>
+    <link rel="stylesheet" href="/styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap"
+    />
+  </head>
+  <body>
+    <div class="page">
+      <header class="hero">
+        <div>
+          <p class="eyebrow">Local OCR Pipeline</p>
+          <h1>DeepSeek OCR Studio</h1>
+          <p class="lead">
+            Upload a PDF, convert every page to an image, and extract text with
+            your local Ollama models.
+          </p>
+        </div>
+        <button id="settingsButton" class="ghost">Settings</button>
+      </header>
+
+      <section class="panel">
+        <div class="dropzone" id="dropzone">
+          <input id="fileInput" type="file" accept="application/pdf,image/*" hidden/>
+          <div>
+            <h2>Drop a PDF or image, or click to browse</h2>
+            <p class="muted">Each page becomes an image and is OCRed locally.</p>
+          </div>
+          <button id="chooseFile" class="primary">Choose PDF</button>
+        </div>
+
+        <div class="controls">
+          <button id="startBtn" class="primary" disabled>
+            Start OCR
+          </button>
+          <button id="resetBtn" class="ghost" disabled>
+            Reset
+          </button>
+          <div class="status" id="statusText">Waiting for a PDF or image.</div>
+        </div>
+      </section>
+
+      <section class="panel doc-output">
+        <div class="doc-header">
+          <div>
+            <p class="eyebrow">Document Output</p>
+            <h2>Combined JSON</h2>
+          </div>
+          <button id="copyJson" class="ghost" disabled>Copy</button>
+        </div>
+        <pre id="documentJson" class="doc-pre"></pre>
+      </section>
+
+      
+      <div class="pager pager-inline">
+        <button id="prevPage" class="ghost" disabled>Prev</button>
+        <div class="page-indicator" id="pageIndicator">Page 0 of 0</div>
+        <button id="nextPage" class="ghost" disabled>Next</button>
+      </div>
+      <section class="grid" id="resultsGrid"></section>
+    </div>
+
+    <dialog id="settingsDialog">
+      <form method="dialog" class="dialog-content">
+        <header>
+          <div>
+            <p class="eyebrow">Settings</p>
+            <h2>JSON Conversion Prompt</h2>
+          </div>
+          <button class="ghost" value="cancel">Close</button>
+        </header>
+        <label>
+          System prompt
+          <textarea id="systemPrompt" rows="5"></textarea>
+        </label>
+        <label>
+          User prompt (use {{text}} to inject OCR text)
+          <textarea id="userPrompt" rows="5"></textarea>
+        </label>
+        <div class="dialog-actions">
+          <button id="saveSettings" class="primary" value="save">
+            Save settings
+          </button>
+        </div>
+      </form>
+    </dialog>
+
+    <script src="/app.js" type="module"></script>
+  </body>
+</html>
