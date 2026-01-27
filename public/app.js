@@ -32,8 +32,7 @@ const state = {
   currentPageIndex: 0,
 };
 
-pdfjsLib.GlobalWorkerOptions.workerSrc =
-  "/vendor/pdfjs/build/pdf.worker.mjs";
+pdfjsLib.GlobalWorkerOptions.workerSrc = "/vendor/pdfjs/build/pdf.worker.mjs";
 
 loadSettings();
 fetchConfig();
@@ -85,7 +84,7 @@ saveSettings.addEventListener("click", () => {
     JSON.stringify({
       systemPrompt: systemPromptInput.value,
       userPrompt: userPromptInput.value,
-    })
+    }),
   );
   if (typeof settingsDialog.close === "function") {
     settingsDialog.close();
@@ -257,7 +256,7 @@ async function runOcrPipeline() {
     const ocrData = await ocrResponse.json();
     updateCardText(page.pageNumber, ocrData.text || "");
     combinedText.push(
-      `--- Page ${page.pageNumber} ---\n${ocrData.text || ""}`.trim()
+      `--- Page ${page.pageNumber} ---\n${ocrData.text || ""}`.trim(),
     );
 
     updateCardStatus(page.pageNumber, "OCR complete");
@@ -316,8 +315,6 @@ function renderCard(pageNumber, dataUrl) {
       <textarea readonly></textarea>
     </label>
     <label>
-      JSON output
-      <pre></pre>
     </label>
   `;
   resultsGrid.appendChild(card);
@@ -399,7 +396,9 @@ async function fetchConfig() {
     state.maxPages = config.maxPages || state.maxPages;
     state.renderScale = config.pdfRenderScale || state.renderScale;
     state.enhancePdf =
-      typeof config.pdfEnhance === "boolean" ? config.pdfEnhance : state.enhancePdf;
+      typeof config.pdfEnhance === "boolean"
+        ? config.pdfEnhance
+        : state.enhancePdf;
     state.enhanceMode = config.pdfEnhanceMode || state.enhanceMode;
     state.enhanceContrast =
       typeof config.pdfEnhanceContrast === "number"
